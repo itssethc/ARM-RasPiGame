@@ -1,0 +1,493 @@
+
+./bin/kernel.elf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00008000 <_start>:
+    8000:	e59fd100 	ldr	sp, [pc, #256]	; 8108 <GAMEOVER+0x20>
+    8004:	e59f0100 	ldr	r0, [pc, #256]	; 810c <GAMEOVER+0x24>
+    8008:	e3a01a02 	mov	r1, #8192	; 0x2000
+    800c:	e5801000 	str	r1, [r0]
+
+00008010 <GAME>:
+    8010:	e3a06000 	mov	r6, #0
+    8014:	e3a08000 	mov	r8, #0
+    8018:	eb000053 	bl	816c <BUTTON>
+    801c:	e3560001 	cmp	r6, #1
+    8020:	0a000000 	beq	8028 <LIGHTS>
+    8024:	eafffff9 	b	8010 <GAME>
+
+00008028 <LIGHTS>:
+    8028:	e3a06000 	mov	r6, #0
+    802c:	eb000127 	bl	84d0 <TURNON26>
+    8030:	eb00004d 	bl	816c <BUTTON>
+    8034:	e3560001 	cmp	r6, #1
+    8038:	0a00001f 	beq	80bc <MISS>
+    803c:	eb0000b5 	bl	8318 <TURNON12>
+    8040:	eb000049 	bl	816c <BUTTON>
+    8044:	e3560001 	cmp	r6, #1
+    8048:	0a00001b 	beq	80bc <MISS>
+    804c:	eb0000c4 	bl	8364 <TURNON16>
+    8050:	eb000045 	bl	816c <BUTTON>
+    8054:	e3560001 	cmp	r6, #1
+    8058:	0a000015 	beq	80b4 <SCORE>
+    805c:	eb0000d3 	bl	83b0 <TURNON20>
+    8060:	eb000041 	bl	816c <BUTTON>
+    8064:	e3560001 	cmp	r6, #1
+    8068:	0a000013 	beq	80bc <MISS>
+    806c:	eb0000e2 	bl	83fc <TURNON21>
+    8070:	eb00003d 	bl	816c <BUTTON>
+    8074:	e3560001 	cmp	r6, #1
+    8078:	0a00000f 	beq	80bc <MISS>
+    807c:	eb0000cb 	bl	83b0 <TURNON20>
+    8080:	eb000039 	bl	816c <BUTTON>
+    8084:	e3560001 	cmp	r6, #1
+    8088:	0a00000b 	beq	80bc <MISS>
+    808c:	eb0000b4 	bl	8364 <TURNON16>
+    8090:	eb000035 	bl	816c <BUTTON>
+    8094:	e3560001 	cmp	r6, #1
+    8098:	0a000005 	beq	80b4 <SCORE>
+    809c:	eb00009d 	bl	8318 <TURNON12>
+    80a0:	eb000031 	bl	816c <BUTTON>
+    80a4:	e3560001 	cmp	r6, #1
+    80a8:	0a000003 	beq	80bc <MISS>
+    80ac:	e59fd054 	ldr	sp, [pc, #84]	; 8108 <GAMEOVER+0x20>
+    80b0:	eaffffdc 	b	8028 <LIGHTS>
+
+000080b4 <SCORE>:
+    80b4:	e2888001 	add	r8, r8, #1
+    80b8:	eaffffda 	b	8028 <LIGHTS>
+
+000080bc <MISS>:
+    80bc:	e59f104c 	ldr	r1, [pc, #76]	; 8110 <GAMEOVER+0x28>
+    80c0:	e5912000 	ldr	r2, [r1]
+    80c4:	e2422001 	sub	r2, r2, #1
+    80c8:	e5812000 	str	r2, [r1]
+
+000080cc <CHECKLIVES>:
+    80cc:	e3520000 	cmp	r2, #0
+    80d0:	0a000004 	beq	80e8 <GAMEOVER>
+
+000080d4 <SHOWLIVES>:
+    80d4:	eb0000db 	bl	8448 <TURNON25>
+    80d8:	e2422001 	sub	r2, r2, #1
+    80dc:	e3520000 	cmp	r2, #0
+    80e0:	0affffd0 	beq	8028 <LIGHTS>
+    80e4:	eafffffa 	b	80d4 <SHOWLIVES>
+
+000080e8 <GAMEOVER>:
+    80e8:	eb000040 	bl	81f0 <RESETSPEED>
+    80ec:	eb0000f7 	bl	84d0 <TURNON26>
+    80f0:	eb00009b 	bl	8364 <TURNON16>
+    80f4:	eb0000c0 	bl	83fc <TURNON21>
+    80f8:	eb000044 	bl	8210 <SHOWSCORE>
+    80fc:	e3a03005 	mov	r3, #5
+    8100:	e5813000 	str	r3, [r1]
+    8104:	eaffffc1 	b	8010 <GAME>
+    8108:	0000956c 	andeq	r9, r0, ip, ror #10
+    810c:	3f200058 	svccc	0x00200058
+    8110:	00008568 	andeq	r8, r0, r8, ror #10
+
+00008114 <LIGHT>:
+    8114:	e92d483f 	push	{r0, r1, r2, r3, r4, r5, fp, lr}
+    8118:	e1a0b00d 	mov	fp, sp
+    811c:	e59b0020 	ldr	r0, [fp, #32]
+    8120:	e59b1024 	ldr	r1, [fp, #36]	; 0x24
+    8124:	e5911000 	ldr	r1, [r1]
+    8128:	e5801000 	str	r1, [r0]
+    812c:	e59b5028 	ldr	r5, [fp, #40]	; 0x28
+    8130:	e3a03000 	mov	r3, #0
+    8134:	e5853000 	str	r3, [r5]
+    8138:	e59b202c 	ldr	r2, [fp, #44]	; 0x2c
+    813c:	e5922000 	ldr	r2, [r2]
+    8140:	e59b3030 	ldr	r3, [fp, #48]	; 0x30
+    8144:	e5832000 	str	r2, [r3]
+    8148:	e59b4034 	ldr	r4, [fp, #52]	; 0x34
+    814c:	e5841000 	str	r1, [r4]
+    8150:	e59b5038 	ldr	r5, [fp, #56]	; 0x38
+    8154:	e5955000 	ldr	r5, [r5]
+
+00008158 <wait>:
+    8158:	e2455001 	sub	r5, r5, #1
+    815c:	e3550000 	cmp	r5, #0
+    8160:	1afffffc 	bne	8158 <wait>
+    8164:	e1a0d00b 	mov	sp, fp
+    8168:	e8bd883f 	pop	{r0, r1, r2, r3, r4, r5, fp, pc}
+
+0000816c <BUTTON>:
+    816c:	e92d483f 	push	{r0, r1, r2, r3, r4, r5, fp, lr}
+    8170:	e1a0b00d 	mov	fp, sp
+
+00008174 <PRESSED>:
+    8174:	e3a05000 	mov	r5, #0
+    8178:	e59f039c 	ldr	r0, [pc, #924]	; 851c <LIGHTUP26+0x44>
+    817c:	e3a01a02 	mov	r1, #8192	; 0x2000
+    8180:	e5902000 	ldr	r2, [r0]
+    8184:	e0023001 	and	r3, r2, r1
+    8188:	e1530001 	cmp	r3, r1
+    818c:	1a000015 	bne	81e8 <EXITBUTTON>
+
+00008190 <GCHECK>:
+    8190:	e3a06001 	mov	r6, #1
+    8194:	e3a01a02 	mov	r1, #8192	; 0x2000
+    8198:	e5801000 	str	r1, [r0]
+    819c:	e59f0378 	ldr	r0, [pc, #888]	; 851c <LIGHTUP26+0x44>
+    81a0:	e3a01a02 	mov	r1, #8192	; 0x2000
+    81a4:	e5902000 	ldr	r2, [r0]
+    81a8:	e0023001 	and	r3, r2, r1
+    81ac:	e1530001 	cmp	r3, r1
+    81b0:	0afffff6 	beq	8190 <GCHECK>
+    81b4:	e2855001 	add	r5, r5, #1
+    81b8:	e3550702 	cmp	r5, #524288	; 0x80000
+    81bc:	3afffff3 	bcc	8190 <GCHECK>
+    81c0:	e59f1358 	ldr	r1, [pc, #856]	; 8520 <LIGHTUP26+0x48>
+    81c4:	e5912000 	ldr	r2, [r1]
+    81c8:	e3a03009 	mov	r3, #9
+    81cc:	e0040392 	mul	r4, r2, r3
+    81d0:	e1a031a4 	lsr	r3, r4, #3
+    81d4:	e0434002 	sub	r4, r3, r2
+    81d8:	e0423004 	sub	r3, r2, r4
+    81dc:	e5813000 	str	r3, [r1]
+    81e0:	ea000000 	b	81e8 <EXITBUTTON>
+
+000081e4 <NOPRESS>:
+    81e4:	e3a06000 	mov	r6, #0
+
+000081e8 <EXITBUTTON>:
+    81e8:	e1a0d00b 	mov	sp, fp
+    81ec:	e8bd883f 	pop	{r0, r1, r2, r3, r4, r5, fp, pc}
+
+000081f0 <RESETSPEED>:
+    81f0:	e92d4806 	push	{r1, r2, fp, lr}
+    81f4:	e1a0b00d 	mov	fp, sp
+    81f8:	e59f1320 	ldr	r1, [pc, #800]	; 8520 <LIGHTUP26+0x48>
+    81fc:	e59f2320 	ldr	r2, [pc, #800]	; 8524 <LIGHTUP26+0x4c>
+    8200:	e5922000 	ldr	r2, [r2]
+    8204:	e5812000 	str	r2, [r1]
+    8208:	e1a0d00b 	mov	sp, fp
+    820c:	e8bd8806 	pop	{r1, r2, fp, pc}
+
+00008210 <SHOWSCORE>:
+    8210:	e92d483f 	push	{r0, r1, r2, r3, r4, r5, fp, lr}
+    8214:	e1a0b00d 	mov	fp, sp
+    8218:	e59f5308 	ldr	r5, [pc, #776]	; 8528 <LIGHTUP26+0x50>
+    821c:	e3a03000 	mov	r3, #0
+    8220:	e5853000 	str	r3, [r5]
+    8224:	e59f5300 	ldr	r5, [pc, #768]	; 852c <LIGHTUP26+0x54>
+    8228:	e3a03000 	mov	r3, #0
+    822c:	e5853000 	str	r3, [r5]
+    8230:	e3a09001 	mov	r9, #1
+
+00008234 <CHECK1>:
+    8234:	e0082009 	and	r2, r8, r9
+    8238:	e1a080a8 	lsr	r8, r8, #1
+    823c:	e3520001 	cmp	r2, #1
+    8240:	1a000006 	bne	8260 <CHECK2>
+
+00008244 <FIRSTSET>:
+    8244:	e59f12e4 	ldr	r1, [pc, #740]	; 8530 <LIGHTUP26+0x58>
+    8248:	e59f22e4 	ldr	r2, [pc, #740]	; 8534 <LIGHTUP26+0x5c>
+    824c:	e5922000 	ldr	r2, [r2]
+    8250:	e59f32d0 	ldr	r3, [pc, #720]	; 8528 <LIGHTUP26+0x50>
+    8254:	e5832000 	str	r2, [r3]
+    8258:	e59f42d8 	ldr	r4, [pc, #728]	; 8538 <LIGHTUP26+0x60>
+    825c:	e5841000 	str	r1, [r4]
+
+00008260 <CHECK2>:
+    8260:	e0082009 	and	r2, r8, r9
+    8264:	e1a080a8 	lsr	r8, r8, #1
+    8268:	e3520001 	cmp	r2, #1
+    826c:	1a000006 	bne	828c <CHECK3>
+
+00008270 <SECONDSET>:
+    8270:	e59f12c4 	ldr	r1, [pc, #708]	; 853c <LIGHTUP26+0x64>
+    8274:	e59f22c4 	ldr	r2, [pc, #708]	; 8540 <LIGHTUP26+0x68>
+    8278:	e5922000 	ldr	r2, [r2]
+    827c:	e59f32a4 	ldr	r3, [pc, #676]	; 8528 <LIGHTUP26+0x50>
+    8280:	e5832000 	str	r2, [r3]
+    8284:	e59f42ac 	ldr	r4, [pc, #684]	; 8538 <LIGHTUP26+0x60>
+    8288:	e5841000 	str	r1, [r4]
+
+0000828c <CHECK3>:
+    828c:	e0082009 	and	r2, r8, r9
+    8290:	e1a080a8 	lsr	r8, r8, #1
+    8294:	e3520001 	cmp	r2, #1
+    8298:	1a000006 	bne	82b8 <CHECK4>
+
+0000829c <THIRDSET>:
+    829c:	e59f12a0 	ldr	r1, [pc, #672]	; 8544 <LIGHTUP26+0x6c>
+    82a0:	e59f22a0 	ldr	r2, [pc, #672]	; 8548 <LIGHTUP26+0x70>
+    82a4:	e5922000 	ldr	r2, [r2]
+    82a8:	e59f327c 	ldr	r3, [pc, #636]	; 852c <LIGHTUP26+0x54>
+    82ac:	e5832000 	str	r2, [r3]
+    82b0:	e59f4280 	ldr	r4, [pc, #640]	; 8538 <LIGHTUP26+0x60>
+    82b4:	e5841000 	str	r1, [r4]
+
+000082b8 <CHECK4>:
+    82b8:	e0082009 	and	r2, r8, r9
+    82bc:	e1a080a8 	lsr	r8, r8, #1
+    82c0:	e3520001 	cmp	r2, #1
+    82c4:	1a000006 	bne	82e4 <CHECK5>
+
+000082c8 <FOURTHSET>:
+    82c8:	e59f127c 	ldr	r1, [pc, #636]	; 854c <LIGHTUP26+0x74>
+    82cc:	e59f227c 	ldr	r2, [pc, #636]	; 8550 <LIGHTUP26+0x78>
+    82d0:	e5922000 	ldr	r2, [r2]
+    82d4:	e59f3250 	ldr	r3, [pc, #592]	; 852c <LIGHTUP26+0x54>
+    82d8:	e5832000 	str	r2, [r3]
+    82dc:	e59f4254 	ldr	r4, [pc, #596]	; 8538 <LIGHTUP26+0x60>
+    82e0:	e5841000 	str	r1, [r4]
+
+000082e4 <CHECK5>:
+    82e4:	e0082009 	and	r2, r8, r9
+    82e8:	e1a080a8 	lsr	r8, r8, #1
+    82ec:	e3520001 	cmp	r2, #1
+    82f0:	1a000006 	bne	8310 <ENDSHOW>
+
+000082f4 <FIFTHSET>:
+    82f4:	e59f1258 	ldr	r1, [pc, #600]	; 8554 <LIGHTUP26+0x7c>
+    82f8:	e59f2258 	ldr	r2, [pc, #600]	; 8558 <LIGHTUP26+0x80>
+    82fc:	e5922000 	ldr	r2, [r2]
+    8300:	e59f3220 	ldr	r3, [pc, #544]	; 8528 <LIGHTUP26+0x50>
+    8304:	e5832000 	str	r2, [r3]
+    8308:	e59f4228 	ldr	r4, [pc, #552]	; 8538 <LIGHTUP26+0x60>
+    830c:	e5841000 	str	r1, [r4]
+
+00008310 <ENDSHOW>:
+    8310:	e1a0d00b 	mov	sp, fp
+    8314:	e8bd883f 	pop	{r0, r1, r2, r3, r4, r5, fp, pc}
+
+00008318 <TURNON12>:
+    8318:	e92d487f 	push	{r0, r1, r2, r3, r4, r5, r6, fp, lr}
+    831c:	e1a0b00d 	mov	fp, sp
+
+00008320 <LIGHTUP12>:
+    8320:	e59f0210 	ldr	r0, [pc, #528]	; 8538 <LIGHTUP26+0x60>
+    8324:	e59f1230 	ldr	r1, [pc, #560]	; 855c <LIGHTUP26+0x84>
+    8328:	e59f21f0 	ldr	r2, [pc, #496]	; 8520 <LIGHTUP26+0x48>
+    832c:	e59f3218 	ldr	r3, [pc, #536]	; 854c <LIGHTUP26+0x74>
+    8330:	e59f4218 	ldr	r4, [pc, #536]	; 8550 <LIGHTUP26+0x78>
+    8334:	e59f51f0 	ldr	r5, [pc, #496]	; 852c <LIGHTUP26+0x54>
+    8338:	e59f61e8 	ldr	r6, [pc, #488]	; 8528 <LIGHTUP26+0x50>
+    833c:	e52d2004 	push	{r2}		; (str r2, [sp, #-4]!)
+    8340:	e52d0004 	push	{r0}		; (str r0, [sp, #-4]!)
+    8344:	e52d5004 	push	{r5}		; (str r5, [sp, #-4]!)
+    8348:	e52d4004 	push	{r4}		; (str r4, [sp, #-4]!)
+    834c:	e52d6004 	push	{r6}		; (str r6, [sp, #-4]!)
+    8350:	e52d3004 	push	{r3}		; (str r3, [sp, #-4]!)
+    8354:	e52d1004 	push	{r1}		; (str r1, [sp, #-4]!)
+    8358:	ebffff6d 	bl	8114 <LIGHT>
+    835c:	e1a0d00b 	mov	sp, fp
+    8360:	e8bd887f 	pop	{r0, r1, r2, r3, r4, r5, r6, fp, pc}
+
+00008364 <TURNON16>:
+    8364:	e92d487f 	push	{r0, r1, r2, r3, r4, r5, r6, fp, lr}
+    8368:	e1a0b00d 	mov	fp, sp
+
+0000836c <LIGHTUP16>:
+    836c:	e59f01c4 	ldr	r0, [pc, #452]	; 8538 <LIGHTUP26+0x60>
+    8370:	e59f11e4 	ldr	r1, [pc, #484]	; 855c <LIGHTUP26+0x84>
+    8374:	e59f21a4 	ldr	r2, [pc, #420]	; 8520 <LIGHTUP26+0x48>
+    8378:	e59f31c4 	ldr	r3, [pc, #452]	; 8544 <LIGHTUP26+0x6c>
+    837c:	e59f41c4 	ldr	r4, [pc, #452]	; 8548 <LIGHTUP26+0x70>
+    8380:	e59f51a4 	ldr	r5, [pc, #420]	; 852c <LIGHTUP26+0x54>
+    8384:	e59f619c 	ldr	r6, [pc, #412]	; 8528 <LIGHTUP26+0x50>
+    8388:	e52d2004 	push	{r2}		; (str r2, [sp, #-4]!)
+    838c:	e52d0004 	push	{r0}		; (str r0, [sp, #-4]!)
+    8390:	e52d5004 	push	{r5}		; (str r5, [sp, #-4]!)
+    8394:	e52d4004 	push	{r4}		; (str r4, [sp, #-4]!)
+    8398:	e52d6004 	push	{r6}		; (str r6, [sp, #-4]!)
+    839c:	e52d3004 	push	{r3}		; (str r3, [sp, #-4]!)
+    83a0:	e52d1004 	push	{r1}		; (str r1, [sp, #-4]!)
+    83a4:	ebffff5a 	bl	8114 <LIGHT>
+    83a8:	e1a0d00b 	mov	sp, fp
+    83ac:	e8bd887f 	pop	{r0, r1, r2, r3, r4, r5, r6, fp, pc}
+
+000083b0 <TURNON20>:
+    83b0:	e92d487f 	push	{r0, r1, r2, r3, r4, r5, r6, fp, lr}
+    83b4:	e1a0b00d 	mov	fp, sp
+
+000083b8 <LIGHTUP20>:
+    83b8:	e59f0178 	ldr	r0, [pc, #376]	; 8538 <LIGHTUP26+0x60>
+    83bc:	e59f1198 	ldr	r1, [pc, #408]	; 855c <LIGHTUP26+0x84>
+    83c0:	e59f2158 	ldr	r2, [pc, #344]	; 8520 <LIGHTUP26+0x48>
+    83c4:	e59f3170 	ldr	r3, [pc, #368]	; 853c <LIGHTUP26+0x64>
+    83c8:	e59f4170 	ldr	r4, [pc, #368]	; 8540 <LIGHTUP26+0x68>
+    83cc:	e59f5154 	ldr	r5, [pc, #340]	; 8528 <LIGHTUP26+0x50>
+    83d0:	e59f6154 	ldr	r6, [pc, #340]	; 852c <LIGHTUP26+0x54>
+    83d4:	e52d2004 	push	{r2}		; (str r2, [sp, #-4]!)
+    83d8:	e52d0004 	push	{r0}		; (str r0, [sp, #-4]!)
+    83dc:	e52d5004 	push	{r5}		; (str r5, [sp, #-4]!)
+    83e0:	e52d4004 	push	{r4}		; (str r4, [sp, #-4]!)
+    83e4:	e52d6004 	push	{r6}		; (str r6, [sp, #-4]!)
+    83e8:	e52d3004 	push	{r3}		; (str r3, [sp, #-4]!)
+    83ec:	e52d1004 	push	{r1}		; (str r1, [sp, #-4]!)
+    83f0:	ebffff47 	bl	8114 <LIGHT>
+    83f4:	e1a0d00b 	mov	sp, fp
+    83f8:	e8bd887f 	pop	{r0, r1, r2, r3, r4, r5, r6, fp, pc}
+
+000083fc <TURNON21>:
+    83fc:	e92d487f 	push	{r0, r1, r2, r3, r4, r5, r6, fp, lr}
+    8400:	e1a0b00d 	mov	fp, sp
+
+00008404 <LIGHTUP21>:
+    8404:	e59f012c 	ldr	r0, [pc, #300]	; 8538 <LIGHTUP26+0x60>
+    8408:	e59f114c 	ldr	r1, [pc, #332]	; 855c <LIGHTUP26+0x84>
+    840c:	e59f210c 	ldr	r2, [pc, #268]	; 8520 <LIGHTUP26+0x48>
+    8410:	e59f3118 	ldr	r3, [pc, #280]	; 8530 <LIGHTUP26+0x58>
+    8414:	e59f4118 	ldr	r4, [pc, #280]	; 8534 <LIGHTUP26+0x5c>
+    8418:	e59f5108 	ldr	r5, [pc, #264]	; 8528 <LIGHTUP26+0x50>
+    841c:	e59f6108 	ldr	r6, [pc, #264]	; 852c <LIGHTUP26+0x54>
+    8420:	e52d2004 	push	{r2}		; (str r2, [sp, #-4]!)
+    8424:	e52d0004 	push	{r0}		; (str r0, [sp, #-4]!)
+    8428:	e52d5004 	push	{r5}		; (str r5, [sp, #-4]!)
+    842c:	e52d4004 	push	{r4}		; (str r4, [sp, #-4]!)
+    8430:	e52d6004 	push	{r6}		; (str r6, [sp, #-4]!)
+    8434:	e52d3004 	push	{r3}		; (str r3, [sp, #-4]!)
+    8438:	e52d1004 	push	{r1}		; (str r1, [sp, #-4]!)
+    843c:	ebffff34 	bl	8114 <LIGHT>
+    8440:	e1a0d00b 	mov	sp, fp
+    8444:	e8bd887f 	pop	{r0, r1, r2, r3, r4, r5, r6, fp, pc}
+
+00008448 <TURNON25>:
+    8448:	e92d487f 	push	{r0, r1, r2, r3, r4, r5, r6, fp, lr}
+    844c:	e1a0b00d 	mov	fp, sp
+
+00008450 <LIGHTUP25>:
+    8450:	e59f00e0 	ldr	r0, [pc, #224]	; 8538 <LIGHTUP26+0x60>
+    8454:	e59f1100 	ldr	r1, [pc, #256]	; 855c <LIGHTUP26+0x84>
+    8458:	e59f20c4 	ldr	r2, [pc, #196]	; 8524 <LIGHTUP26+0x4c>
+    845c:	e59f30fc 	ldr	r3, [pc, #252]	; 8560 <LIGHTUP26+0x88>
+    8460:	e59f40fc 	ldr	r4, [pc, #252]	; 8564 <LIGHTUP26+0x8c>
+    8464:	e59f50bc 	ldr	r5, [pc, #188]	; 8528 <LIGHTUP26+0x50>
+    8468:	e59f60bc 	ldr	r6, [pc, #188]	; 852c <LIGHTUP26+0x54>
+    846c:	e52d2004 	push	{r2}		; (str r2, [sp, #-4]!)
+    8470:	e52d0004 	push	{r0}		; (str r0, [sp, #-4]!)
+    8474:	e52d5004 	push	{r5}		; (str r5, [sp, #-4]!)
+    8478:	e52d4004 	push	{r4}		; (str r4, [sp, #-4]!)
+    847c:	e52d6004 	push	{r6}		; (str r6, [sp, #-4]!)
+    8480:	e52d3004 	push	{r3}		; (str r3, [sp, #-4]!)
+    8484:	e52d1004 	push	{r1}		; (str r1, [sp, #-4]!)
+    8488:	ebffff21 	bl	8114 <LIGHT>
+
+0000848c <LIGHTUP2X>:
+    848c:	e59f00a4 	ldr	r0, [pc, #164]	; 8538 <LIGHTUP26+0x60>
+    8490:	e59f10c4 	ldr	r1, [pc, #196]	; 855c <LIGHTUP26+0x84>
+    8494:	e59f2088 	ldr	r2, [pc, #136]	; 8524 <LIGHTUP26+0x4c>
+    8498:	e59f30c0 	ldr	r3, [pc, #192]	; 8560 <LIGHTUP26+0x88>
+    849c:	e59f40c0 	ldr	r4, [pc, #192]	; 8564 <LIGHTUP26+0x8c>
+    84a0:	e59f5084 	ldr	r5, [pc, #132]	; 852c <LIGHTUP26+0x54>
+    84a4:	e59f607c 	ldr	r6, [pc, #124]	; 8528 <LIGHTUP26+0x50>
+    84a8:	e52d2004 	push	{r2}		; (str r2, [sp, #-4]!)
+    84ac:	e52d0004 	push	{r0}		; (str r0, [sp, #-4]!)
+    84b0:	e52d5004 	push	{r5}		; (str r5, [sp, #-4]!)
+    84b4:	e52d4004 	push	{r4}		; (str r4, [sp, #-4]!)
+    84b8:	e52d6004 	push	{r6}		; (str r6, [sp, #-4]!)
+    84bc:	e52d3004 	push	{r3}		; (str r3, [sp, #-4]!)
+    84c0:	e52d1004 	push	{r1}		; (str r1, [sp, #-4]!)
+    84c4:	ebffff12 	bl	8114 <LIGHT>
+    84c8:	e1a0d00b 	mov	sp, fp
+    84cc:	e8bd887f 	pop	{r0, r1, r2, r3, r4, r5, r6, fp, pc}
+
+000084d0 <TURNON26>:
+    84d0:	e92d487f 	push	{r0, r1, r2, r3, r4, r5, r6, fp, lr}
+    84d4:	e1a0b00d 	mov	fp, sp
+
+000084d8 <LIGHTUP26>:
+    84d8:	e59f0058 	ldr	r0, [pc, #88]	; 8538 <LIGHTUP26+0x60>
+    84dc:	e59f1078 	ldr	r1, [pc, #120]	; 855c <LIGHTUP26+0x84>
+    84e0:	e59f2038 	ldr	r2, [pc, #56]	; 8520 <LIGHTUP26+0x48>
+    84e4:	e59f3068 	ldr	r3, [pc, #104]	; 8554 <LIGHTUP26+0x7c>
+    84e8:	e59f4068 	ldr	r4, [pc, #104]	; 8558 <LIGHTUP26+0x80>
+    84ec:	e59f5034 	ldr	r5, [pc, #52]	; 8528 <LIGHTUP26+0x50>
+    84f0:	e59f6034 	ldr	r6, [pc, #52]	; 852c <LIGHTUP26+0x54>
+    84f4:	e52d2004 	push	{r2}		; (str r2, [sp, #-4]!)
+    84f8:	e52d0004 	push	{r0}		; (str r0, [sp, #-4]!)
+    84fc:	e52d5004 	push	{r5}		; (str r5, [sp, #-4]!)
+    8500:	e52d4004 	push	{r4}		; (str r4, [sp, #-4]!)
+    8504:	e52d6004 	push	{r6}		; (str r6, [sp, #-4]!)
+    8508:	e52d3004 	push	{r3}		; (str r3, [sp, #-4]!)
+    850c:	e52d1004 	push	{r1}		; (str r1, [sp, #-4]!)
+    8510:	ebfffeff 	bl	8114 <LIGHT>
+    8514:	e1a0d00b 	mov	sp, fp
+    8518:	e8bd887f 	pop	{r0, r1, r2, r3, r4, r5, r6, fp, pc}
+    851c:	3f200040 	svccc	0x00200040
+    8520:	000095a0 	andeq	r9, r0, r0, lsr #11
+    8524:	0000959c 	muleq	r0, ip, r5
+    8528:	3f200008 	svccc	0x00200008
+    852c:	3f200004 	svccc	0x00200004
+    8530:	00009590 	muleq	r0, r0, r5
+    8534:	00009578 	andeq	r9, r0, r8, ror r5
+    8538:	3f20001c 	svccc	0x0020001c
+    853c:	0000958c 	andeq	r9, r0, ip, lsl #11
+    8540:	00009574 	andeq	r9, r0, r4, ror r5
+    8544:	00009588 	andeq	r9, r0, r8, lsl #11
+    8548:	00009570 	andeq	r9, r0, r0, ror r5
+    854c:	00009584 	andeq	r9, r0, r4, lsl #11
+    8550:	0000956c 	andeq	r9, r0, ip, ror #10
+    8554:	00009598 	muleq	r0, r8, r5
+    8558:	00009580 	andeq	r9, r0, r0, lsl #11
+    855c:	3f200028 	svccc	0x00200028
+    8560:	00009594 	muleq	r0, r4, r5
+    8564:	0000957c 	andeq	r9, r0, ip, ror r5
+
+Disassembly of section .data:
+
+00008568 <LIVES>:
+    8568:	00000005 	andeq	r0, r0, r5
+
+0000856c <_stack_end>:
+	...
+
+0000956c <TOGGLE12>:
+    956c:	00000040 	andeq	r0, r0, r0, asr #32
+
+00009570 <TOGGLE16>:
+    9570:	00040000 	andeq	r0, r4, r0
+
+00009574 <TOGGLE20>:
+    9574:	00000001 	andeq	r0, r0, r1
+
+00009578 <TOGGLE21>:
+    9578:	00000008 	andeq	r0, r0, r8
+
+0000957c <TOGGLE25>:
+    957c:	00008000 	andeq	r8, r0, r0
+
+00009580 <TOGGLE26>:
+    9580:	00040000 	andeq	r0, r4, r0
+
+00009584 <SET12>:
+    9584:	00001000 	andeq	r1, r0, r0
+
+00009588 <SET16>:
+    9588:	00010001 	andeq	r0, r1, r1
+
+0000958c <SET20>:
+    958c:	00100001 	andseq	r0, r0, r1
+
+00009590 <SET21>:
+    9590:	00200001 	eoreq	r0, r0, r1
+
+00009594 <SET25>:
+    9594:	02000001 	andeq	r0, r0, #1
+
+00009598 <SET26>:
+    9598:	04000001 	streq	r0, [r0], #-1
+
+0000959c <SPEED2>:
+    959c:	00100000 	andseq	r0, r0, r0
+
+000095a0 <SPEED>:
+    95a0:	00100000 	andseq	r0, r0, r0
+
+Disassembly of section .ARM.attributes:
+
+00000000 <.ARM.attributes>:
+   0:	00001141 	andeq	r1, r0, r1, asr #2
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	00000007 	andeq	r0, r0, r7
+  10:	Address 0x0000000000000010 is out of bounds.
+
